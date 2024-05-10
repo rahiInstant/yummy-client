@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDsISuV7WPHUA1fF63OxP7atYJHvacWUs8",
-  authDomain: "recipe-net.firebaseapp.com",
-  projectId: "recipe-net",
-  storageBucket: "recipe-net.appspot.com",
-  messagingSenderId: "185921107057",
-  appId: "1:185921107057:web:d823070ce14c0c8ec4d7d0",
+  apiKey: import.meta.env.VITE_APIKEY,
+  authDomain: import.meta.env.VITE_AUTHDOMAIN,
+  projectId: import.meta.env.VITE_PROJECTID,
+  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
+  appId: import.meta.env.VITE_APPID,
 };
 
 // Initialize Firebase
