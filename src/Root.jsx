@@ -4,7 +4,7 @@ import Footer from "./components/Shared/Footer";
 
 const Root = () => {
   return (
-    <div className="font-Inter max-w-7xl mx-auto">
+    <div className="font-Poppins ">
       <Navbar />
       <Outlet />
       <Footer />

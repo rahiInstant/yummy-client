@@ -4,7 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        Inter: '"Inter", sans-serif',
+        Poppins: '"Poppins", sans-serif',
+        super:'Super Creamy, sans-serif'
       },
     },
   },
