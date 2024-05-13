@@ -1,8 +1,35 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { BsEmojiGrin } from "react-icons/bs";
 import { IoIosArrowDown } from "react-icons/io";
+import { AuthContext } from "../../auth/AuthContext";
 
 const AddItem = () => {
+  const { user } = useState(AuthContext);
+  console.log(user?.displayName);
+  function handleAddItem(e) {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const photo = form.photo.value;
+    const category = form.category.value;
+    const origin = form.origin.value;
+    const price = form.price.value;
+    const quantity = form.quantity.value;
+    const comment = form.comment.value;
+    
+    const itemInfo = {
+      name,
+      photo,
+      category,
+      origin,
+      price,
+      quantity,
+      comment,
+      user: user?.email,
+      username: user?.displayName,
+    };
+    console.log(itemInfo);
+  }
   return (
     <div className="">
       <Helmet>
@@ -18,47 +45,23 @@ const AddItem = () => {
       </div>
       <div className="mt-12 flex justify-center items-center">
         <div className="rounded-2xl lg:p-10  p-5 border w-full sm:w-[500px] lg:w-[800px] mx-5">
-          <form className="  flex flex-col gap-4">
-            {/* part 01 */}
-
-            <div className="flex gap-5 w-full items-end  flex-col sm:flex-row">
-              <div className="relative h-fit  border rounded-md w-full">
-                <select
-                  name="country"
-                  required
-                  className=" py-4 px-5 text-lg   appearance-none font-semibold rounded-lg outline-none w-full"
-                >
-                  <option className="hidden" value="">
-                    -- Country --
-                  </option>
-                  <option value="Bangladesh">Bangladesh</option>
-                  <option value="Thailand">Thailand</option>
-                  <option value="Vietnam">Vietnam</option>
-                  <option value="Indonesia">Indonesia</option>
-                  <option value="Malaysia">Malaysia</option>
-                  <option value="Cambodia">Cambodia</option>
-                </select>
-                <div className="absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none">
-                  <IoIosArrowDown className="text-2xl" />
-                </div>
-              </div>
+          <form onSubmit={handleAddItem} className="  flex flex-col gap-4">
+            {/* Part 01 */}
+            <div className="flex gap-5 w-full flex-col sm:flex-row">
               <div className="w-full">
-                <label className="block text-xl font-semibold  " htmlFor="spot">
-                  Spot
+                <label className="block text-xl font-semibold  " htmlFor="name">
+                  Food name
                 </label>
 
                 <input
                   required
-                  id="spot"
-                  name="spot"
+                  id="name"
+                  name="name"
                   className="py-4 px-5 mt-2 w-full text-lg rounded-lg outline-none border "
-                  placeholder="Pataia"
                   type="text"
+                  placeholder="write food name here"
                 />
               </div>
-            </div>
-            {/* Part 02 */}
-            <div className="flex gap-5 w-full flex-col sm:flex-row">
               <div className="w-full">
                 <label
                   className="block text-xl font-semibold  "
@@ -75,26 +78,86 @@ const AddItem = () => {
                   placeholder="https://photourl.com"
                 />
               </div>
+            </div>
+            {/* part 01 */}
+
+            <div className="flex gap-5 w-full items-end  flex-col sm:flex-row">
+              <div className="relative h-fit  border rounded-md w-full">
+                <select
+                  name="origin"
+                  required
+                  className=" py-4 px-5 text-lg   appearance-none font-semibold rounded-lg outline-none w-full"
+                >
+                  <option className="hidden" value="">
+                    -- Origin --
+                  </option>
+                  <option value="Bangladesh">Bangladesh</option>
+                  <option value="Thailand">India</option>
+                  <option value="Vietnam">Japan</option>
+                  <option value="Indonesia">Gana</option>
+                  <option value="Indonesia">Turkey</option>
+                </select>
+                <div className="absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none">
+                  <IoIosArrowDown className="text-2xl" />
+                </div>
+              </div>
+              <div className="relative h-fit  border rounded-md w-full">
+                <select
+                  name="category"
+                  required
+                  className=" py-4 px-5 text-lg   appearance-none font-semibold rounded-lg outline-none w-full"
+                >
+                  <option className="hidden" value="">
+                    -- Category --
+                  </option>
+                  <option value="Bangladesh">Biriyani</option>
+                  <option value="Thailand">Kacci</option>
+                  <option value="Vietnam">Kebab</option>
+                  <option value="Indonesia">Fry</option>
+                  <option value="Indonesia">Gem</option>
+                </select>
+                <div className="absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none">
+                  <IoIosArrowDown className="text-2xl" />
+                </div>
+              </div>
+            </div>
+            {/* Part 02 */}
+            <div className="flex gap-5 w-full flex-col sm:flex-row">
               <div className="w-full">
                 <label
                   className="block text-xl font-semibold  "
-                  htmlFor="location"
+                  htmlFor="price"
                 >
-                  Location
+                  Price
+                </label>
+                <input
+                  required
+                  id="price"
+                  name="price"
+                  className="py-4 px-5 mt-2 w-full text-lg rounded-lg outline-none border "
+                  type="number"
+                  placeholder="write food price here"
+                />
+              </div>
+              <div className="w-full">
+                <label
+                  className="block text-xl font-semibold  "
+                  htmlFor="quantity"
+                >
+                  Quantity
                 </label>
 
                 <input
                   required
-                  id="location"
-                  name="location"
+                  id="quantity"
+                  name="quantity"
                   className="py-4 px-5 mt-2 w-full text-lg rounded-lg outline-none border "
-                  type="text"
-                  placeholder="sub-location,main-location"
+                  type="number"
+                  placeholder="write available quantity."
                 />
               </div>
             </div>
-            {/* part 03 */}
-            <div className="flex gap-5 items-end flex-col sm:flex-row">
+            {/* <div className="flex gap-5 items-end flex-col sm:flex-row">
               <div className="w-full gap-5">
                 <label className="block text-xl font-semibold  " htmlFor="cost">
                   Average Cost
@@ -125,40 +188,7 @@ const AddItem = () => {
                   <IoIosArrowDown className="text-2xl" />
                 </div>
               </div>
-            </div>
-            {/* part 04 */}
-            <div className="flex gap-5 w-full flex-col sm:flex-row">
-              <div className="w-full">
-                <label className="block text-xl   font-semibold" htmlFor="time">
-                  Travel Time
-                </label>
-                <input
-                  required
-                  className="py-4 px-5 w-full mt-2 text-lg rounded-lg outline-none border "
-                  type="number"
-                  name="time"
-                  id="time"
-                  placeholder="12"
-                />
-              </div>
-              <div className="w-full">
-                <label
-                  className="block text-xl   font-semibold"
-                  htmlFor="visitor"
-                >
-                  Total Visitor per Year
-                </label>
-
-                <input
-                  required
-                  name="visitor"
-                  id="visitor"
-                  className="py-4 px-5 mt-2 w-full text-lg rounded-lg outline-none border "
-                  type="number"
-                  placeholder="10000"
-                />
-              </div>
-            </div>
+            </div> */}
             <textarea
               required
               className="outline-none border rounded-md py-4 px-5"

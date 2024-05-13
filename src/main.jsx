@@ -62,11 +62,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/my-added-items",
-        element: (
-          <Private>
-            <MyAdd />
-          </Private>
-        ),
+        element: <MyAdd />,
       },
       {
         path: "/my-ordered-items",
@@ -90,11 +86,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
-      <HelmetProvider>
-        <Toaster />
+    <HelmetProvider>
+      <Toaster />
+      <AuthProvider>
         <RouterProvider router={router}></RouterProvider>
-      </HelmetProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </HelmetProvider>
   </React.StrictMode>
 );

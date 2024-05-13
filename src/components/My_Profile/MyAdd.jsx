@@ -4,6 +4,7 @@ import { RxCross1, RxCrossCircled } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../auth/AuthContext";
 import { IoIosArrowDown } from "react-icons/io";
+import { GrDocumentUpdate } from "react-icons/gr";
 
 const MyAdd = () => {
   const [open, setOpen] = useState(false);
@@ -48,7 +49,7 @@ const MyAdd = () => {
                 <select
                   name=""
                   id="select"
-                  className="py-3.5 px-5 text-lg appearance-none font-semibold rounded-lg outline-none w-full md:w-auto"
+                  className="py-3.5 px-5 text-lg appearance-none font-medium rounded-lg outline-none w-full md:w-auto"
                 >
                   <option value="" className="hidden">
                     Sort by--

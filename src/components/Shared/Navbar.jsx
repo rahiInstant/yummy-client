@@ -11,6 +11,7 @@ const Navbar = () => {
   const [open, isOpen] = useState(false);
   const [drop, setDrop] = useState(false);
   const { user, logOut } = useContext(AuthContext);
+  console.log(user?.email)
   const navLinks = [
     { navText: "Home", path: "/", id: 1 },
     { navText: "All Food", path: "/all-food", id: 2 },

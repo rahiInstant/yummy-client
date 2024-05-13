@@ -26,7 +26,7 @@ const MyOrder = () => {
                 <select
                   name=""
                   id="select"
-                  className="py-3.5 px-5 text-lg appearance-none font-semibold rounded-lg outline-none w-full md:w-auto"
+                  className="py-3.5 px-5 text-lg appearance-none font-medium rounded-lg outline-none w-full md:w-auto"
                 >
                   <option value="" className="hidden">
                     Sort by--
