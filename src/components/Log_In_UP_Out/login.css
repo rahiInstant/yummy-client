@@ -1,0 +1,7 @@
+.card-header {
+  background: linear-gradient(to right, #080808ad, #08080860),
+    url("/slide_06.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}

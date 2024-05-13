@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./components/Home/Home.jsx";
@@ -11,6 +10,14 @@ import MyProfile from "./components/My_Profile/MyProfile.jsx";
 import LogIn from "./components/Log_In_UP_Out/LogIn.jsx";
 import Detail from "./components/All_Food/Detail.jsx";
 import Purchase from "./components/All_Food/Purchase.jsx";
+import { HelmetProvider } from "react-helmet-async";
+import AuthProvider from "./auth/AuthProvider.jsx";
+import Register from "./components/Log_In_UP_Out/Register.jsx";
+import { Toaster } from "react-hot-toast";
+import Private from "./components/Shared/Private.jsx";
+import MyAdd from "./components/My_Profile/MyAdd.jsx";
+import MyOrder from "./components/My_Profile/MyOrder.jsx";
+import AddItem from "./components/My_Profile/AddItem.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,12 +45,44 @@ const router = createBrowserRouter([
         element: <LogIn />,
       },
       {
+        path: "/register",
+        element: <Register />,
+      },
+      {
         path: "/detail/:id",
         element: <Detail />,
       },
       {
         path: "/purchase/:id",
-        element: <Purchase />,
+        element: (
+          <Private>
+            <Purchase />
+          </Private>
+        ),
+      },
+      {
+        path: "/my-added-items",
+        element: (
+          <Private>
+            <MyAdd />
+          </Private>
+        ),
+      },
+      {
+        path: "/my-ordered-items",
+        element: (
+          <Private>
+            <MyOrder />
+          </Private>
+        ),
+      },
+      {
+        path: "/add-item",
+        element: (
+          <Private>
+            <AddItem />
+          </Private>
+        ),
       },
     ],
   },
@@ -51,6 +90,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <AuthProvider>
+      <HelmetProvider>
+        <Toaster />
+        <RouterProvider router={router}></RouterProvider>
+      </HelmetProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

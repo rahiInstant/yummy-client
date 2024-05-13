@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosArrowForward } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
 // import "./Navbar.css";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../auth/AuthContext";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [open, isOpen] = useState(false);
-  // console.log(open);
+  const [drop, setDrop] = useState(false);
+  const { user, logOut } = useContext(AuthContext);
   const navLinks = [
     { navText: "Home", path: "/", id: 1 },
     { navText: "All Food", path: "/all-food", id: 2 },
@@ -19,6 +22,19 @@ const Navbar = () => {
   flex w-full lg:w-auto hover:bg-[#d18937] lg:hover:bg-[#ffffff31] 
   duration-200 lg:items-center  py-5 lg:py-0
   `;
+  const successMsg = (msg) => toast.success(msg);
+  const errorMsg = (msg) => toast.error(msg);
+  function handleLogout() {
+    logOut()
+      .then(() => {
+        successMsg("Logout successfully!!");
+      })
+      .catch((error) => {
+        errorMsg("failed to logout!!");
+        console.log(error);
+      });
+  }
+  console.log(drop);
   return (
     <nav className="  h-[85px] backdrop-blur-xl bg-[#63626257] fixed top-0 left-0  w-full z-20 flex justify-between items-center px-4 lg:px-10 ">
       <div className="flex items-center gap-3 ">
@@ -43,6 +59,7 @@ const Navbar = () => {
           open ? "left-[0%]" : "-left-[100%]"
         }  duration-700 items-center lg:flex lg:h-full shadow-[5px_0_5px_#00000040] text-[#181717] text-lg font-medium lg:shadow-none w-[250px] lg:bg-transparent bg-[#b66d1a]  h-screen  z-50 fixed lg:static top-0  lg:w-auto flex-col  lg:flex-row  `}
       >
+        <div className="lg:hidden flex"></div>
         <div className="flex justify-end">
           <label
             onClick={() => isOpen(!open)}
@@ -64,34 +81,71 @@ const Navbar = () => {
             </NavLink>
           );
         })}
-        {/* <a className={navClassName} href="#"></a>
-        <a className={navClassName} href="#">
-          <div className="">About </div>
-          <div className="text-xl lg:hidden">
-            <IoIosArrowForward />
-          </div>
-        </a>
-        <a className={navClassName} href="#">
-          <div className="">Blog </div>
-          <div className="text-xl lg:hidden">
-            <IoIosArrowForward />
-          </div>
-        </a>
-        <a className={navClassName} href="#">
-          <div className=""> Order</div>
-          <div className="text-xl lg:hidden">
-            <IoIosArrowForward />
-          </div>
-        </a>
-        <a className={navClassName} href="#">
-          <div className="">Profile </div>
-          <div className="text-xl lg:hidden">
-            <IoIosArrowForward />
-          </div>
-        </a> */}
+        <div className="block lg:hidden mx-4 mt-4 text-center">
+          {user ? (
+            <div
+              onClick={handleLogout}
+              className="text-xl  text-white font-medium py-2 px-5  hover:bg-[#3b3b3b59]   border border-white rounded-lg  duration-200"
+            >
+              Log out
+            </div>
+          ) : (
+            <Link to="/login">
+              <div className="text-xl  text-white font-medium py-2 px-5  hover:bg-[#3b3b3b59]  border border-white rounded-lg  duration-200 ">
+                Log in
+              </div>
+            </Link>
+          )}
+        </div>
       </div>
-      <div>
-        <div className="h-10 w-10 rounded-full bg-white"></div>
+      <div className="relative">
+        <div
+          className={`absolute ${
+            drop ? "opacity-100 top-[75px]" : "opacity-0 top-[90px]"
+          } w-[200px] border-2 duration-300  right-5  rounded-md bg-[#ffffff] text-[#1a1919]`}
+        >
+          <Link to="/my-added-items">
+            <div className="p-3 hover:bg-[#b3b3b344] border-b border-[#bebebe] cursor-pointer">
+              My Items
+            </div>
+          </Link>
+          <Link to="/my-ordered-items">
+            <div className="p-3 hover:bg-[#b3b3b344] border-b border-[#bebebe] cursor-pointer">
+              My Order
+            </div>
+          </Link>
+          <Link to="/add-item">
+            <div className="p-3 hover:bg-[#b3b3b344]  cursor-pointer">
+              Add Item
+            </div>
+          </Link>
+        </div>
+        {user ? (
+          <div className=" items-center gap-5 flex ">
+            <div className="">
+              <img
+                onClick={() => setDrop(!drop)}
+                src={user.photoURL}
+                className="rounded-full border-2 w-10 h-10 cursor-pointer"
+                alt=""
+              />
+            </div>
+            <div
+              onClick={handleLogout}
+              className="text-xl cursor-pointer  text-white font-medium py-2 px-5  hover:bg-[#3b3b3b59] hidden lg:flex  border border-white rounded-lg  duration-200"
+            >
+              Log out
+            </div>
+          </div>
+        ) : (
+          <div className=" items-center gap-5 hidden lg:flex">
+            <Link to="/login">
+              <div className="text-xl  text-white font-medium py-2 px-5  hover:bg-[#3b3b3b59]  border border-white rounded-lg  duration-200 ">
+                Log in
+              </div>
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

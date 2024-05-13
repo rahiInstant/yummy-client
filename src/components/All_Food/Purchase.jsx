@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { AuthContext } from "../../auth/AuthContext";
+
 const Purchase = () => {
+  const {user} = useContext(AuthContext)
   function handlePurchase(e) {
     e.preventDefault();
   }
@@ -28,13 +32,13 @@ const Purchase = () => {
                     className="px-4 py-3 rounded-lg w-full border"
                     type="text"
                     disabled
-                    placeholder="Abdur Rahaman Rahi"
+                    placeholder={user.displayName}
                   />
                   <input
                     className="px-4 py-3 rounded-lg w-full border"
                     type="text"
                     disabled
-                    placeholder="rahiurp20@gmail.com"
+                    placeholder={user.email}
                   />
                 </div>
                 <div className="flex flex-col sm:flex-row gap-5 w-full">
