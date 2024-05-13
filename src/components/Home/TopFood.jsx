@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const TopFood = () => {
   const card = (
     <>
@@ -17,9 +19,11 @@ const TopFood = () => {
             <h1 className="text-xl font-semibold mt-2.5">Price: $29</h1>
             <h1 className="mt-1 italic text-lg">Category : Biriyani</h1>
           </div>
-          <button className=" mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-semibold text-xl text-[#f8f8f8]">
-            Yummy Details
-          </button>
+          <Link to="/detail/3254546adf">
+            <button className=" mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-semibold text-xl text-[#f8f8f8]">
+              Yummy Details
+            </button>
+          </Link>
         </div>
       </div>
     </>
@@ -47,7 +51,11 @@ const TopFood = () => {
         {card}
       </div>
       <div className="mt-16 flex justify-center">
-        <button className="px-6 py-4 rounded-lg border text-lg font-semibold border-[#a75d21] hover:bg-[#ff9e4f49] duration-150">See All Yummy</button>
+        <Link to="/all-food">
+          <button className="px-6 py-4 rounded-lg border text-lg font-semibold border-[#a75d21] hover:bg-[#ff9e4f49] duration-150">
+            See All Yummy
+          </button>
+        </Link>
       </div>
     </div>
   );

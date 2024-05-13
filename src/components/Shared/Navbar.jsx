@@ -2,10 +2,17 @@ import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoIosArrowForward } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
-import "./Navbar.jsx";
+// import "./Navbar.css";
+import { NavLink } from "react-router-dom";
+
 const Navbar = () => {
   const [open, isOpen] = useState(false);
   // console.log(open);
+  const navLinks = [
+    { navText: "Home", path: "/", id: 1 },
+    { navText: "All Food", path: "/all-food", id: 2 },
+    { navText: "Gallery", path: "/gallery", id: 3 },
+  ];
   const navClassName = `
   lg:h-full  items-center cursor-pointer justify-between 
   lg:justify-center px-7 lg:border-t-0  border-t  border-[#d18937] 
@@ -19,7 +26,7 @@ const Navbar = () => {
         <label
           onClick={() => isOpen(!open)}
           htmlFor="sidebar-active"
-          className="lg:hidden block cursor-pointer p-2 text-xl bg-[] text-[#e7e7e7]"
+          className="lg:hidden block cursor-pointer p-2 text-xl bg-[#d6801d] text-[#f1f1f1]"
         >
           <RxHamburgerMenu />
         </label>
@@ -34,7 +41,7 @@ const Navbar = () => {
       <div
         className={`${
           open ? "left-[0%]" : "-left-[100%]"
-        }  duration-700 items-center lg:flex lg:h-full shadow-[5px_0_5px_#00000040] text-[#181717] text-lg font-medium lg:shadow-none w-[250px] lg:bg-transparent bg-[#b66d1a]  h-screen  z-50 fixed lg:static l top-0  lg:w-auto flex-col  lg:flex-row  `}
+        }  duration-700 items-center lg:flex lg:h-full shadow-[5px_0_5px_#00000040] text-[#181717] text-lg font-medium lg:shadow-none w-[250px] lg:bg-transparent bg-[#b66d1a]  h-screen  z-50 fixed lg:static top-0  lg:w-auto flex-col  lg:flex-row  `}
       >
         <div className="flex justify-end">
           <label
@@ -45,12 +52,19 @@ const Navbar = () => {
             <RxCross1 />
           </label>
         </div>
-        <a className={navClassName} href="#">
-          <div className=""> Home</div>
-          <div className="text-xl lg:hidden">
-            <IoIosArrowForward />
-          </div>
-        </a>
+        {navLinks.map((item, id) => {
+          return (
+            <NavLink className="h-full" to={item.path} key={id}>
+              <div className={navClassName}>
+                <div className="">{item.navText}</div>
+                <div className="text-xl lg:hidden">
+                  <IoIosArrowForward />
+                </div>
+              </div>
+            </NavLink>
+          );
+        })}
+        {/* <a className={navClassName} href="#"></a>
         <a className={navClassName} href="#">
           <div className="">About </div>
           <div className="text-xl lg:hidden">
@@ -74,7 +88,7 @@ const Navbar = () => {
           <div className="text-xl lg:hidden">
             <IoIosArrowForward />
           </div>
-        </a>
+        </a> */}
       </div>
       <div>
         <div className="h-10 w-10 rounded-full bg-white"></div>

@@ -8,3 +8,9 @@
   font-family: Super Creamy;
   src: url("/Super Creamy Personal Use.ttf");
 }
+
+
+th,td {
+  border: 1px solid #bbbbbb;
+  padding: 10px;
+}

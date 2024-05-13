@@ -1,3 +1,4 @@
-.text-glow {
-    text-shadow:10px 20px 30px blue ;
+.active {
+    border-right: 2px ridge #fff;
+    border-left: 2px ridge #fff;
 }
