@@ -11,7 +11,7 @@ import { GrDocumentUpdate } from "react-icons/gr";
 const MyOrder = () => {
   // const {} = useContext(AuthContext)
   const card = [];
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const param = useParams();
   const { data, isPending } = useQuery({
     queryKey: ["user-order"],
@@ -23,7 +23,13 @@ const MyOrder = () => {
   if (isPending) {
     return <div className="text-2xl font-bold text-red-500">Loading...</div>;
   }
-  console.log(data)
+  function handleDeleteBtn(id) {
+    axiosSecure.delete(`/user-order-delete/${id}`).then((res) => {
+      
+      console.log(res.data);
+    });
+  }
+  console.log(data);
   return (
     <div>
       <Helmet>
@@ -90,7 +96,7 @@ const MyOrder = () => {
               </tr>
             </thead>
             <tbody>
-            {data.map((item, idx) => {
+              {data.map((item, idx) => {
                 return (
                   <tr key={idx}>
                     <td className="text-center ">{idx + 1}</td>
@@ -100,7 +106,7 @@ const MyOrder = () => {
                     <td className="text-center">{item.date}</td>
                     <td>
                       <div
-                        // onClick={() => handleDeleteBtn(item._id)}
+                        onClick={() => handleDeleteBtn(item._id)}
                         className="p-2 cursor-pointer bg-red-700 rounded-md w-fit text-white text-xl mx-auto"
                       >
                         <RxCrossCircled />

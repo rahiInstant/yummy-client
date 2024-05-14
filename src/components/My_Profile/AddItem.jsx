@@ -28,10 +28,10 @@ const AddItem = () => {
       photo,
       category,
       origin,
-      price:parseInt(price),
-      quantity:parseInt(quantity),
+      price: parseInt(price),
+      quantity: parseInt(quantity),
       comment,
-      discount:parseInt(discount),
+      discount: parseInt(discount),
       email,
       username,
       count: 0,
@@ -106,10 +106,10 @@ const AddItem = () => {
                     -- Origin --
                   </option>
                   <option value="Bangladesh">Bangladesh</option>
-                  <option value="Thailand">India</option>
-                  <option value="Vietnam">Japan</option>
-                  <option value="Indonesia">Gana</option>
-                  <option value="Indonesia">Turkey</option>
+                  <option value="India">India</option>
+                  <option value="Japan">Japan</option>
+                  <option value="Gana">Gana</option>
+                  <option value="Turkey">Turkey</option>
                 </select>
                 <div className="absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none">
                   <IoIosArrowDown className="text-2xl" />

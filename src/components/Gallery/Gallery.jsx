@@ -14,6 +14,7 @@ const Gallery = () => {
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const successMsg = (msg) => toast.success(msg);
+  const errorMsg = (msg) => toast.error(msg);
   useEffect(() => {
     axiosSecure.get("/gallery").then((res) => {
       setFeed(res.data)
@@ -39,7 +40,7 @@ const Gallery = () => {
 
   const showSwal = () => {
     if (!user) {
-      navigate("/login");
+      errorMsg('Please login to add review')
       return;
     }
     MySwal.fire({
@@ -86,20 +87,7 @@ const Gallery = () => {
       ),
     });
   };
-  const card = (
-    <>
-      <div className="h-[300px] relative overflow-hidden ">
-        <img className="h-full rounded-[12px]" src="/slide_02.jpg" alt="" />
-        <div className="absolute bg-[#ffffffb9] opacity-0  hover:opacity-100 h-full duration-300 p-4 text-center top-0 flex flex-col items-center justify-center">
-          <h1 className="text-2xl mb-2 font-semibold">Abdur Rahaman</h1>
-          <p className="italic font-medium">
-            "Tender marinated chicken infused with aromatic spices, slow-cooked
-            to perfection. A delectable culinary delight awaits!"
-          </p>
-        </div>
-      </div>
-    </>
-  );
+
 
   return (
     <div>
@@ -139,12 +127,6 @@ const Gallery = () => {
                 </div>)
                 })
               }
-              {/* {card}
-              {card}
-              {card}
-              {card}
-              {card}
-              {card} */}
             </div>
           </div>
         </div>
