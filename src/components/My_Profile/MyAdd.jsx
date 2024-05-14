@@ -11,16 +11,19 @@ import useAxiosSecure from "../CutomHook/useAxiosSecure";
 const MyAdd = () => {
   const [open, setOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  const param = useParams()
-  const card = [];
-  const {data} = useQuery({
-    queryKey:["my-data"],
+  const param = useParams();
+  const axiosSecure = useAxiosSecure()
+  console.log('params', param)
+  const { data, isPending } = useQuery({
+    queryKey: ["particular"],
     queryFn: async () => {
-      const result = await useAxiosSecure.get(`/get-food-detail/${param.email}`);
+      const result = await axiosSecure.get(`/my-item/${user?.email}`);
       return result.data;
-    }
-  }) 
-  console.log(data)
+    },
+  });
+  if (isPending) {
+    return <div className="text-2xl font-bold text-red-500">Loading...</div>;
+  }
   return (
     <div>
       <Helmet>
@@ -106,14 +109,14 @@ const MyAdd = () => {
               </tr>
             </thead>
             <tbody>
-              {card.map((item, idx) => {
+              {data.map((item, idx) => {
                 return (
                   <tr key={idx}>
                     <td className="text-center ">{idx + 1}</td>
-                    <td className="text-center">{item.country}</td>
-                    <td>{item.spot}</td>
-                    <td>{item.location}</td>
-                    <td className="text-center">{item.cost}</td>
+                    <td className="text-left">{item.name}</td>
+                    <td className="text-center">{item.price}</td>
+                    <td className="text-center">{item.quantity}</td>
+                    <td className="text-center">{item.count}</td>
                     <td>
                       <Link to={`/update/${item._id}`}>
                         <div className="p-2 cursor-pointer bg-green-700 rounded-md w-fit text-white text-xl mx-auto">
