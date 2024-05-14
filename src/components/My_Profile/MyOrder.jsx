@@ -8,6 +8,7 @@ import useAxiosSecure from "../CutomHook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { GrDocumentUpdate } from "react-icons/gr";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const MyOrder = () => {
   // const {} = useContext(AuthContext)
@@ -23,11 +24,37 @@ const MyOrder = () => {
   });
 
   function handleDeleteBtn(id) {
-    // axiosSecure.delete(`/user-order-delete/${id}`).then((res) => {
-    //   refetch()
-    //   successMsg('Order deleted successfully!!')
-    //   console.log(res.data);
-    // });
+    Swal.fire({
+      title: "Ary sure to delete this spot?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, I want to Delete.",
+      denyButtonText: "Cancel",
+    })
+      .then((result) => {
+        console.log(result);
+        if (result.isConfirmed) {
+          return axiosSecure.delete(`/user-order-delete/${id}`);
+        } else if (result.isDismissed) {
+          return new Promise((res, rej) => "");
+        }
+      })
+      .then(() => {
+        refetch()
+        Swal.fire({
+          title: "Deleted!",
+          text: "Spot deleted successfully!!",
+          icon: "success",
+        });
+      })
+      .catch((err) => {
+        console.log(err)
+        Swal.fire({
+          title: "Error!",
+          text: "spot can't deleted",
+          icon: "error",
+        });
+      });
   }
   console.log(data);
   return (
