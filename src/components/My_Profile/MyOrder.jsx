@@ -7,13 +7,14 @@ import { AuthContext } from "../../auth/AuthContext";
 import useAxiosSecure from "../CutomHook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { GrDocumentUpdate } from "react-icons/gr";
+import toast from "react-hot-toast";
 
 const MyOrder = () => {
   // const {} = useContext(AuthContext)
-  const card = [];
   const axiosSecure = useAxiosSecure();
+  const successMsg = (msg) => toast.success(msg);
   const param = useParams();
-  const { data, isPending } = useQuery({
+  const { data, isPending, refetch } = useQuery({
     queryKey: ["user-order"],
     queryFn: async () => {
       const result = await axiosSecure.get(`/user-order/${param?.email}`);
@@ -24,10 +25,11 @@ const MyOrder = () => {
     return <div className="text-2xl font-bold text-red-500">Loading...</div>;
   }
   function handleDeleteBtn(id) {
-    axiosSecure.delete(`/user-order-delete/${id}`).then((res) => {
-      
-      console.log(res.data);
-    });
+    // axiosSecure.delete(`/user-order-delete/${id}`).then((res) => {
+    //   refetch()
+    //   successMsg('Order deleted successfully!!')
+    //   console.log(res.data);
+    // });
   }
   console.log(data);
   return (

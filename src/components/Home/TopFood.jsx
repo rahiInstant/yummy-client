@@ -9,35 +9,35 @@ const TopFood = () => {
     axiosSecure.get("/top-food").then((res) => {
       setTopFood(res.data);
       console.log(res.data);
-    });
-  });
-  const card = (
-    <>
-      <div className=" h-auto shadow-md  rounded-lg ">
-        <div>
-          <img
-            className="h-[300px] w-full rounded-xl p-2"
-            src="/card_01.jpg"
-            alt=""
-          />
-        </div>
-        <div className="p-3">
-          <div className="ml-5 pl-2 border-[#ffad5075] border-l-4">
-            <h1 className="text-2xl font-bold text-[#2b2a2a] mt-2">
-              Special Chicken kacci
-            </h1>
-            <h1 className="text-xl font-semibold mt-2.5">Price: $29</h1>
-            <h1 className="mt-1 italic text-lg">Category : Biriyani</h1>
-          </div>
-          <Link to="/detail/3254546adf">
-            <button className=" mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-semibold text-xl text-[#f8f8f8]">
-              Yummy Details
-            </button>
-          </Link>
-        </div>
-      </div>
-    </>
-  );
+    })
+  },[axiosSecure]);
+  // const card = (
+  //   <>
+  //     <div className=" h-auto shadow-md  rounded-lg ">
+  //       <div>
+  //         <img
+  //           className="h-[300px] w-full rounded-xl p-2"
+  //           src="/card_01.jpg"
+  //           alt=""
+  //         />
+  //       </div>
+  //       <div className="p-3">
+  //         <div className="ml-5 pl-2 border-[#ffad5075] border-l-4">
+  //           <h1 className="text-2xl font-bold text-[#2b2a2a] mt-2">
+  //             Special Chicken kacci
+  //           </h1>
+  //           <h1 className="text-xl font-semibold mt-2.5">Price: $29</h1>
+  //           <h1 className="mt-1 italic text-lg">Category : Biriyani</h1>
+  //         </div>
+  //         <Link to="/detail/3254546adf">
+  //           <button className=" mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-semibold text-xl text-[#f8f8f8]">
+  //             Yummy Details
+  //           </button>
+  //         </Link>
+  //       </div>
+  //     </div>
+  //   </>
+  // );
 
   return (
     <div className="mt-32 max-w-7xl mx-auto">
