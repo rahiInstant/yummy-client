@@ -4,6 +4,7 @@ import { getData } from "./FoodContext";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosSecure from "../CutomHook/useAxiosSecure";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Purchase = () => {
   const { user } = useContext(AuthContext);
@@ -41,6 +42,9 @@ const Purchase = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Yummy | Food Purchase</title>
+      </Helmet>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
         <h1 className="text-[50px] font-bold uppercase text-[#c2c2c2] mt-12 text-center">
           Let's Enjoy Yummy

@@ -33,7 +33,7 @@ const MyOrder = () => {
   return (
     <div>
       <Helmet>
-        <title>Arohi | My List</title>
+        <title>Yummy | My Ordered Item</title>
       </Helmet>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
         <h1 className="text-[50px] font-bold uppercase text-[#c2c2c2] mt-12 text-center">

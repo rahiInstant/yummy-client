@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 const Login = () => {
   const [show, setShow] = useState(false);
   const [passFieldType, setPassFieldType] = useState("password");
-  const [title, setTitle] = useState("Nest | login");
+  const [title, setTitle] = useState("Yummy | login");
   const { signInUser, googleSignIn, githubSignIn } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();

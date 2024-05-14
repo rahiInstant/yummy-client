@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../CutomHook/useAxiosSecure";
 import { setData } from "./FoodContext";
+import { Helmet } from "react-helmet-async";
 const Detail = () => {
   const [img, setImg] = useState("/slide_08.jpg");
   const [itemCount, setItemCount] = useState(1);
@@ -29,6 +30,9 @@ const Detail = () => {
   console.log(data);
   return (
     <div>
+      <Helmet>
+        <title>Yummy | Food Details</title>
+      </Helmet>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
         <h1 className="text-[50px] font-bold uppercase text-[#c2c2c2] mt-12 text-center">
           Yummy Details Here

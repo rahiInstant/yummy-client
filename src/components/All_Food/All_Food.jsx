@@ -5,6 +5,7 @@ import { IoSearchSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import useAxiosSecure from "../CutomHook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 
 const All_Food = () => {
   const [food, setFood] = useState([]);
@@ -70,6 +71,9 @@ const All_Food = () => {
 
   return (
     <div className="relative">
+      <Helmet>
+        <title>Yummy | All food</title>
+      </Helmet>
       <div
         className={`${
           open ? "right-[0%]" : "-right-[100%]"

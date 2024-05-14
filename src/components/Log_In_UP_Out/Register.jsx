@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 const Register = () => {
   const [show, setShow] = useState(false);
   const [passFieldType, setPassFieldType] = useState("password");
-  const [title, setTitle] = useState("Nest | login");
+  const [title, setTitle] = useState("Yummy | Register");
   const location = useLocation();
   const navigate = useNavigate();
   const { createUser, updateProfileData } = useContext(AuthContext);
