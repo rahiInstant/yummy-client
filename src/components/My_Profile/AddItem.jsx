@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { IoIosArrowDown } from "react-icons/io";
 import { AuthContext } from "../../auth/AuthContext";
+import useAxiosSecure from "../CutomHook/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const AddItem = () => {
-  const { user } = useState(AuthContext);
-  console.log(user?.displayName);
+  const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const successMsg = (msg) => toast.success(msg);
+
   function handleAddItem(e) {
     e.preventDefault();
     const form = e.target;
@@ -16,7 +20,8 @@ const AddItem = () => {
     const price = form.price.value;
     const quantity = form.quantity.value;
     const comment = form.comment.value;
-    
+    const email = user?.email;
+    const username = user?.displayName;
     const itemInfo = {
       name,
       photo,
@@ -25,15 +30,21 @@ const AddItem = () => {
       price,
       quantity,
       comment,
-      user: user?.email,
-      username: user?.displayName,
+      email,
+      username,
     };
-    console.log(itemInfo);
+    axiosSecure.post("/add-food", itemInfo).then((res) => {
+      console.log(res.data);
+      if (res.data.insertedId) {
+        successMsg("Your food added to the collection.");
+      }
+    });
+    // console.log(itemInfo);
   }
   return (
     <div className="">
       <Helmet>
-        <title>Arohi | Add Spot</title>
+        <title>Yammy | Add Food </title>
       </Helmet>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
         <h1 className="text-[50px] font-bold uppercase text-[#c2c2c2] mt-12 text-center">

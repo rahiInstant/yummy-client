@@ -18,11 +18,14 @@ import Private from "./components/Shared/Private.jsx";
 import MyAdd from "./components/My_Profile/MyAdd.jsx";
 import MyOrder from "./components/My_Profile/MyOrder.jsx";
 import AddItem from "./components/My_Profile/AddItem.jsx";
-
+import ErrorPage from "./components/Shared/ErrorPage.jsx";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -62,7 +65,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/my-added-items",
-        element: <MyAdd />,
+        element: (
+          <Private>
+            <MyAdd />
+          </Private>
+        ),
       },
       {
         path: "/my-ordered-items",
@@ -86,11 +93,13 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <HelmetProvider>
-      <Toaster />
-      <AuthProvider>
-        <RouterProvider router={router}></RouterProvider>
-      </AuthProvider>
-    </HelmetProvider>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <Toaster />
+        <AuthProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </AuthProvider>
+      </HelmetProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

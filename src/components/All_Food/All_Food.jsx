@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../CutomHook/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const All_Food = () => {
+  const [food, setFood] = useState([]);
   const [open, setOpen] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  const { data, isPending } = useQuery({
+    queryKey: ["food"],
+    queryFn: async () => {
+      const result = await axiosSecure.get("/get-food");
+      return result.data;
+    },
+  });
+  if (isPending) {
+    return <div className="text-2xl font-bold text-red-500">Loading...</div>;
+  }
+
   const card = (
     <>
       <div className=" h-auto shadow-md  rounded-lg ">
@@ -35,7 +50,7 @@ const All_Food = () => {
       </div>
     </>
   );
-  console.log(open);
+  // console.log(open);
   return (
     <div className="relative">
       <div
@@ -105,11 +120,45 @@ const All_Food = () => {
           </div>
         </div>
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-6 mx-4 ">
+          {data?.map((item, idx) => {
+            return (
+              <div key={idx} className=" h-auto shadow-md  rounded-lg ">
+                <div className="relative">
+                  <img
+                    className="h-[300px] w-full rounded-xl p-2"
+                    src="/card_01.jpg"
+                    alt=""
+                  />
+                  <div className=" backdrop-blur-xl text-white font-bold absolute bottom-4 right-4 py-2 px-4 border-2  rounded-md mt-5 w-fit">
+                    Stock : {item.quantity}
+                  </div>
+                </div>
+                <div className="p-3">
+                  <div className="ml-5 pl-2 border-[#ffad5075] border-l-4">
+                    <h1 className="text-2xl font-bold text-[#2b2a2a] mt-2">
+                      {item.name}
+                    </h1>
+                    <h1 className="text-xl font-semibold mt-2.5">
+                      Price: ${item.price}
+                    </h1>
+                    <h1 className="mt-1 italic text-lg">
+                      Category : {item.category}
+                    </h1>
+                  </div>
+                  <Link to="/detail/3254546adf">
+                    <button className=" mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-semibold text-xl text-[#f8f8f8]">
+                      Yummy Details
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+          {/* {card}
           {card}
           {card}
           {card}
-          {card}
-          {card}
+          {card} */}
         </div>
       </div>
     </div>

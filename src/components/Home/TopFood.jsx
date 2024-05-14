@@ -1,6 +1,12 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../CutomHook/useAxiosSecure";
 
 const TopFood = () => {
+  const axiosSecure = useAxiosSecure()
+  useEffect(() => {
+    axiosSecure.get('/get-top-food')
+  })
   const card = (
     <>
       <div className=" h-auto shadow-md  rounded-lg ">

@@ -102,8 +102,8 @@ const Navbar = () => {
       <div className="relative">
         <div
           className={`absolute ${
-            drop ? "opacity-100 top-[75px]" : "opacity-0 top-[90px]"
-          } w-[200px] border-2 duration-300  right-5  rounded-md bg-[#ffffff] text-[#1a1919]`}
+            drop ? "opacity-100 top-[75px] pointer-events-auto" : "opacity-0 top-[90px] pointer-events-none"
+          }  w-[200px] border-2 duration-300  right-5  rounded-md bg-[#ffffff] text-[#1a1919]`}
         >
           <Link to="/my-added-items">
             <div className="p-3 hover:bg-[#b3b3b344] border-b border-[#bebebe] cursor-pointer">
