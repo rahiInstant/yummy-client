@@ -1,15 +1,44 @@
 import { useContext } from "react";
 import { AuthContext } from "../../auth/AuthContext";
+import { getData } from "./FoodContext";
+import { useNavigate, useParams } from "react-router-dom";
+import useAxiosSecure from "../CutomHook/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const Purchase = () => {
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
+  const param = useParams();
+  const order = getData();
+  const axiosSecure = useAxiosSecure();
+  const successMsg = (msg) => toast.success(msg);
+  const navigate = useNavigate();
   function handlePurchase(e) {
     e.preventDefault();
+    const address = e.target.address.value;
+    const name = user.displayName;
+    const email = user.email;
+    const date = now();
+    const id = param.id;
+    const orderInfo = { address, name, email, date, id, ...order };
+    axiosSecure.post("/purchase", orderInfo).then((res) => {
+      if (res.data.insertedId) {
+        successMsg("Your order placed successfully.");
+        axiosSecure
+          .patch(`/update-food/${param.id}`, { itemCount: order.itemCount })
+          .then((res) => console.log(res.data));
+        // setTimeout(() => {
+        //   navigate("/all-food");
+        // }, 1000);
+      }
+      console.log(res.data);
+    });
+    console.log(orderInfo);
   }
   function now() {
     const date = new Date();
     return date.toLocaleString();
   }
+
   return (
     <div>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
@@ -49,7 +78,9 @@ const Purchase = () => {
                     placeholder={now()}
                   />
                   <input
+                    required
                     autoFocus
+                    name="address"
                     className="px-4 py-3 rounded-lg w-full border outline-none focus:border-orange-500"
                     type="text"
                     placeholder="Your address here"
@@ -77,11 +108,15 @@ const Purchase = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Special Spicy Chicken</td>
-                    <td className="text-center">BDT 600</td>
-                    <td className="text-center">6</td>
-                  </tr>
+                  {order ? (
+                    <tr>
+                      <td>{order.name}</td>
+                      <td className="text-center">${order.price}</td>
+                      <td className="text-center">{order.itemCount}</td>
+                    </tr>
+                  ) : (
+                    ""
+                  )}
                 </tbody>
               </table>
             </div>

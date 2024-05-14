@@ -19,7 +19,7 @@ const All_Food = () => {
   if (isPending) {
     return <div className="text-2xl font-bold text-red-500">Loading...</div>;
   }
-
+console.log(data)
   const card = (
     <>
       <div className=" h-auto shadow-md  rounded-lg ">
@@ -130,7 +130,7 @@ const All_Food = () => {
                     alt=""
                   />
                   <div className=" backdrop-blur-xl text-white font-bold absolute bottom-4 right-4 py-2 px-4 border-2  rounded-md mt-5 w-fit">
-                    Stock : {item.quantity}
+                    Stock : {item.quantity - item.count}
                   </div>
                 </div>
                 <div className="p-3">
@@ -139,13 +139,13 @@ const All_Food = () => {
                       {item.name}
                     </h1>
                     <h1 className="text-xl font-semibold mt-2.5">
-                      Price: ${item.price}
+                      Price: ${item.price-item.discount}
                     </h1>
                     <h1 className="mt-1 italic text-lg">
                       Category : {item.category}
                     </h1>
                   </div>
-                  <Link to="/detail/3254546adf">
+                  <Link to={`/detail/${item._id}`}>
                     <button className=" mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-semibold text-xl text-[#f8f8f8]">
                       Yummy Details
                     </button>

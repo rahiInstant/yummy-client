@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/my-added-items",
+        path: "/my-added-items/:email",
         element: (
           <Private>
             <MyAdd />

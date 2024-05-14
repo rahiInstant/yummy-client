@@ -1,11 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { TbCategory } from "react-icons/tb";
 import { BsPeopleFill } from "react-icons/bs";
 import { FaGlobeAmericas } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../CutomHook/useAxiosSecure";
+import { setData } from "./FoodContext";
 const Detail = () => {
   const [img, setImg] = useState("/slide_08.jpg");
   const [itemCount, setItemCount] = useState(1);
+  // const { order, setOrder } = useContext(FoodContext);
+  const axiosSecure = useAxiosSecure();
+  const param = useParams();
+  const { data, isPending } = useQuery({
+    queryKey: ["single food"],
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/get-food-detail/${param.id}`);
+      return result.data;
+    },
+  });
+  useEffect(() => {
+    setImg(data?.photo);
+  }, [data]);
+  if (isPending) {
+    return <div className="text-2xl font-bold text-red-500">Loading...</div>;
+  }
+
+  console.log(data);
   return (
     <div>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
@@ -23,9 +44,9 @@ const Detail = () => {
           </div>
           <div className="flex gap-4 mt-4 items-center justify-center">
             <img
-              onClick={() => setImg("/slide_08.jpg")}
+              onClick={() => setImg(data.photo)}
               className="h-20 w-20 rounded-md cursor-pointer"
-              src="/slide_08.jpg"
+              src={data.photo}
               alt=""
             />
             <img
@@ -50,20 +71,19 @@ const Detail = () => {
         </div>
         <div className="lg:w-1/2 mx-5 lg:mx-0 lg:mr-8 xl:mr-0">
           <h1 className="text-[30px] sm:text-[40px] font-bold text-[#2b2a2a]">
-            Special Chicken kacci
+            {data.name}
           </h1>
-          <p className="mt-3 text-[#222224e8]">
-            Indulge in our succulent Special Chicken Kacci, a symphony of
-            flavors wrapped in tender marinated chicken and fragrant spices,
-            slow-cooked to perfection. Savor every bite of this culinary
-            delight, a testament to our commitment to exquisite taste.
-          </p>
+          <p className="mt-3 text-[#222224e8]">{data.comment}</p>
           <div className="mt-4  flex gap-2 items-center">
-            <span className="font-semibold">BDT</span>
-            <span className="line-through text-red-500 text-lg sm:text-xl">700 </span>
-            <span className="text-2xl sm:text-[30px] font-semibold ">600</span>
+            <span className="text-xl font-semibold">$</span>
+            <span className="line-through text-red-500 text-lg sm:text-xl">
+              {data.price}
+            </span>
+            <span className="text-2xl sm:text-[30px] font-semibold ">
+              {data.price - data.discount}
+            </span>
             <span className="text-base font-medium bg-red-100 p-2 rounded-full">
-              21% OFF
+              {Math.floor((data.discount / data.price) * 100)}% OFF
             </span>
           </div>
 
@@ -91,8 +111,18 @@ const Detail = () => {
                 +
               </div>
             </div>
-            <Link to="/purchase/52749695dfghfh">
-              <button className="px-5 py-3 rounded-full bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-medium text-[#f8f8f8]">
+            <Link to={`/purchase/${data._id}`}>
+              <button
+                onClick={() =>
+                  setData({
+                    name: data.name,
+                    price: data.price,
+                    itemCount,
+                    ownerMail: data.email,
+                  })
+                }
+                className="px-5 py-3 rounded-full bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-medium text-[#f8f8f8]"
+              >
                 Purchase Yummy
               </button>
             </Link>
@@ -100,15 +130,15 @@ const Detail = () => {
           <div className="space-y-2 mt-5 font-medium">
             <h1 className="flex items-center gap-2">
               <TbCategory />
-              Category: Biriyani
+              Category: {data.category}
             </h1>
             <h1 className="flex items-center gap-2">
               <BsPeopleFill />
-              Made by: Chanku Akhter
+              Made by: {data.username}
             </h1>
             <h1 className="flex items-center gap-2">
               <FaGlobeAmericas />
-              Origin: Noakhali
+              Origin: {data.origin}
             </h1>
           </div>
         </div>

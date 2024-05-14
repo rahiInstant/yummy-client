@@ -12,6 +12,7 @@ import {
   signOut,
 } from "firebase/auth";
 import useAxiosSecure from "../components/CutomHook/useAxiosSecure.jsx";
+import { setData } from "../components/All_Food/FoodContext.js";
 const AuthProvider = ({ children }) => {
   const axiosSecure = useAxiosSecure();
   const [user, setUser] = useState(null);
@@ -28,6 +29,7 @@ const AuthProvider = ({ children }) => {
           .post("/jwt", { email: userEmail })
           .then((res) => console.log(res.data));
       } else {
+        setData("");
         axiosSecure
           .post("/out", { email: userEmail })
           .then((res) => console.log(res.data));

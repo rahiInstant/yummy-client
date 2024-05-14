@@ -1,15 +1,26 @@
 import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { RxCross1, RxCrossCircled } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../auth/AuthContext";
 import { IoIosArrowDown } from "react-icons/io";
 import { GrDocumentUpdate } from "react-icons/gr";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../CutomHook/useAxiosSecure";
 
 const MyAdd = () => {
   const [open, setOpen] = useState(false);
   const { user } = useContext(AuthContext);
+  const param = useParams()
   const card = [];
+  const {data} = useQuery({
+    queryKey:["my-data"],
+    queryFn: async () => {
+      const result = await useAxiosSecure.get(`/get-food-detail/${param.email}`);
+      return result.data;
+    }
+  }) 
+  console.log(data)
   return (
     <div>
       <Helmet>
@@ -38,18 +49,18 @@ const MyAdd = () => {
       <div className="max-w-7xl mx-auto mt-12">
         <div className=" border-b-2 border-b-orange-500 pb-6 mx-4 ">
           <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="flex  items-center gap-2 w-full md:w-auto ">
+            <div className="flex  items-center gap-2">
               <button
                 onClick={() => setOpen(!open)}
                 className="py-4 px-5 font-medium bg-[#eb8c21] rounded-lg w-fit text-[#ffffff]"
               >
                 Filter
               </button>
-              <div className="relative border rounded-lg md:w-auto w-full">
+              <div className="relative border rounded-lg w-full">
                 <select
                   name=""
                   id="select"
-                  className="py-3.5 px-5 text-lg appearance-none font-medium rounded-lg outline-none w-full md:w-auto"
+                  className="py-3.5 pl-5 pr-12 text-lg appearance-none font-medium rounded-lg outline-none w-full "
                 >
                   <option value="" className="hidden">
                     Sort by--
@@ -61,10 +72,10 @@ const MyAdd = () => {
                     Price:Low to High
                   </option>
                   <option className="bg-white text-lg font-semibold" value="3">
-                    Number of Purchase
+                    Purchase: High to Low
                   </option>
                   <option className="bg-white text-lg font-semibold" value="3">
-                    Rating
+                    Purchase:Low to High
                   </option>
                 </select>
                 <div className="absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none">
@@ -74,7 +85,7 @@ const MyAdd = () => {
             </div>
 
             <input
-              className="outline-none  px-5 py-4 rounded-lg border w-full"
+              className="outline-none  px-5 py-4 rounded-lg border flex-auto"
               type="text"
               name=""
               id=""
@@ -86,10 +97,10 @@ const MyAdd = () => {
             <thead>
               <tr>
                 <th>SN.</th>
-                <th>Country</th>
-                <th>Spot</th>
-                <th>Location</th>
-                <th>Average Cost</th>
+                <th>food name</th>
+                <th>price</th>
+                <th>Stock</th>
+                <th>sell</th>
                 <th>Update</th>
                 <th>Delete</th>
               </tr>

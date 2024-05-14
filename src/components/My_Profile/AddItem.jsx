@@ -22,16 +22,19 @@ const AddItem = () => {
     const comment = form.comment.value;
     const email = user?.email;
     const username = user?.displayName;
+    const discount = form.discount.value;
     const itemInfo = {
       name,
       photo,
       category,
       origin,
-      price,
-      quantity,
+      price:parseInt(price),
+      quantity:parseInt(quantity),
       comment,
+      discount:parseInt(discount),
       email,
       username,
+      count: 0,
     };
     axiosSecure.post("/add-food", itemInfo).then((res) => {
       console.log(res.data);
@@ -165,6 +168,38 @@ const AddItem = () => {
                   className="py-4 px-5 mt-2 w-full text-lg rounded-lg outline-none border "
                   type="number"
                   placeholder="write available quantity."
+                />
+              </div>
+            </div>
+            <div className="flex gap-5 w-full flex-col sm:flex-row">
+              <div className="w-full">
+                <label className="block text-xl font-semibold  " htmlFor="user">
+                  Add By
+                </label>
+                <input
+                  disabled
+                  id="user"
+                  name="user"
+                  className="py-4 px-5 mt-2 w-full text-lg rounded-lg outline-none border "
+                  type="text"
+                  placeholder={user?.displayName}
+                />
+              </div>
+              <div className="w-full">
+                <label
+                  className="block text-xl font-semibold  "
+                  htmlFor="discount"
+                >
+                  Discount
+                </label>
+
+                <input
+                  required
+                  id="discount"
+                  name="discount"
+                  className="py-4 px-5 mt-2 w-full text-lg rounded-lg outline-none border "
+                  type="number"
+                  placeholder="Discount in dollar."
                 />
               </div>
             </div>
