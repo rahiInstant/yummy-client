@@ -5,17 +5,17 @@ import LatestNews from "./LatestNews";
 import TopFood from "./TopFood";
 
 const Home = () => {
-    return (
-        <div className="  ">
-            <Helmet>
-                <title>Yummy | Home</title>
-            </Helmet>
-            <Banner/>
-            <TopFood/>
-            <LatestNews/>
-            <Customer/>
-        </div>
-    );
+  return (
+    <div className="  ">
+      <Helmet>
+        <title>Yummy | Home</title>
+      </Helmet>
+      <Banner />
+      <TopFood />
+      <LatestNews />
+      <Customer />
+    </div>
+  );
 };
 
 export default Home;
