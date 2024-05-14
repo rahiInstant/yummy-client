@@ -12,7 +12,7 @@ const MyAdd = () => {
   const [open, setOpen] = useState(false);
   const { user } = useContext(AuthContext);
   const param = useParams();
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const { data, isPending } = useQuery({
     queryKey: ["my-add"],
     queryFn: async () => {
@@ -20,9 +20,9 @@ const MyAdd = () => {
       return result.data;
     },
   });
-  if (isPending) {
-    return <div className="text-2xl font-bold text-red-500">Loading...</div>;
-  }
+  // if (isPending) {
+  //   return <div className="text-2xl font-bold text-red-500   flex justify-center items-center">Loading...</div>;
+  // }
   return (
     <div>
       <Helmet>
@@ -51,7 +51,7 @@ const MyAdd = () => {
       <div className="max-w-7xl mx-auto mt-12">
         <div className=" border-b-2 border-b-orange-500 pb-6 mx-4 ">
           <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="flex  items-center gap-2">
+            <div className="flex  items-center gap-2 w-full">
               <button
                 onClick={() => setOpen(!open)}
                 className="py-4 px-5 font-medium bg-[#eb8c21] rounded-lg w-fit text-[#ffffff]"
@@ -87,10 +87,11 @@ const MyAdd = () => {
             </div>
 
             <input
-              className="outline-none  px-5 py-4 rounded-lg border flex-auto"
+              className="outline-none  px-5 py-4 rounded-lg border w-full"
               type="text"
               name=""
               id=""
+              placeholder="Search Here..."
             />
           </div>
         </div>
@@ -108,39 +109,46 @@ const MyAdd = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((item, idx) => {
-                return (
-                  <tr key={idx}>
-                    <td className="text-center ">{idx + 1}</td>
-                    <td className="text-left">{item.name}</td>
-                    <td className="text-center">{item.price}</td>
-                    <td className="text-center">{item.quantity}</td>
-                    <td className="text-center">{item.count}</td>
-                    <td>
-                      <Link to={`/update/${item._id}`}>
-                        <div className="p-2 cursor-pointer bg-green-700 rounded-md w-fit text-white text-xl mx-auto">
-                          <GrDocumentUpdate />
-                        </div>
-                      </Link>
-                      {/* <div
+              {isPending ? (
+                <div className="text-2xl font-bold text-red-500   flex justify-center items-center">
+                  Loading...
+                </div>
+              ) : (
+                data.map((item, idx) => {
+                  return (
+                    <tr key={idx}>
+                      <td className="text-center ">{idx + 1}</td>
+                      <td className="text-left">{item.name}</td>
+                      <td className="text-center">{item.price}</td>
+                      <td className="text-center">{item.quantity}</td>
+                      <td className="text-center">{item.count}</td>
+                      <td>
+                        <Link to={`/update/${item._id}`}>
+                          <div className="p-2 cursor-pointer bg-green-700 rounded-md w-fit text-white text-xl mx-auto">
+                            <GrDocumentUpdate />
+                          </div>
+                        </Link>
+                        {/* <div
                         onClick={() => handleUpdateBtn(item._id)}
                         className="p-2 cursor-pointer bg-green-700 rounded-md w-fit text-white text-xl mx-auto"
                       >
                         <GrDocumentUpdate />
                       </div> */}
-                    </td>
+                      </td>
 
-                    <td>
-                      <div
-                        // onClick={() => handleDeleteBtn(item._id)}
-                        className="p-2 cursor-pointer bg-red-700 rounded-md w-fit text-white text-xl mx-auto"
-                      >
-                        <RxCrossCircled />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+                      <td>
+                        <div
+                          // onClick={() => handleDeleteBtn(item._id)}
+                          className="p-2 cursor-pointer bg-red-700 rounded-md w-fit text-white text-xl mx-auto"
+                        >
+                          <RxCrossCircled />
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+              {/* {} */}
             </tbody>
           </table>
         </div>
