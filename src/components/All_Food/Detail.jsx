@@ -85,13 +85,14 @@ const Detail = () => {
               {data?.name}
             </h1>
             <p className="mt-3 text-[#222224e8]">{data?.comment}</p>
+            <div className="mb-5 mt-2 uppercase font-semibold px-2 py-0.5 bg-[#a0fc8e9f] w-fit">{data?.quantity-data?.count} items in stock</div>
             <div className="mt-4  flex gap-2 items-center">
               <span className="text-xl font-semibold">$</span>
               <span className="line-through text-red-500 text-lg sm:text-xl">
                 {data?.price}
               </span>
               <span className="text-2xl sm:text-[30px] font-semibold ">
-                {data?.price - data.discount}
+                {data?.price - data?.discount}
               </span>
               <span className="text-base font-medium bg-red-100 p-2 rounded-full">
                 {Math.floor((data?.discount / data?.price) * 100)}% OFF
@@ -113,15 +114,17 @@ const Detail = () => {
                 <div>{itemCount}</div>
                 <div
                   onClick={() => {
-                    let newCount = itemCount + 1;
-                    setItemCount(newCount);
+                    if (itemCount < data?.quantity) {
+                      let newCount = itemCount + 1;
+                      setItemCount(newCount);
+                    }
                   }}
                   className="w-10 h-10 cursor-pointer rounded-full bg-slate-200 text-lg font-medium flex items-center justify-center"
                 >
                   +
                 </div>
               </div>
-              {data.price - data?.discount > 0 &&
+              {data?.quantity - data?.count > 0 &&
               data?.email !== user?.email ? (
                 <Link to={`/purchase/${data._id}`}>
                   <button
