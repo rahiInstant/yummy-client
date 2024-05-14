@@ -9,8 +9,8 @@ const TopFood = () => {
     axiosSecure.get("/top-food").then((res) => {
       setTopFood(res.data);
       console.log(res.data);
-    })
-  },[axiosSecure]);
+    });
+  }, [axiosSecure]);
   // const card = (
   //   <>
   //     <div className=" h-auto shadow-md  rounded-lg ">
@@ -57,20 +57,28 @@ const TopFood = () => {
         {topFood?.map((item, idx) => {
           return (
             <div key={idx} className=" h-auto shadow-md  rounded-lg ">
-              <div>
+              <div className="relative">
                 <img
                   className="h-[300px] w-full rounded-xl p-2"
                   src={item.photo}
                   alt=""
                 />
+                <div className=" backdrop-blur-xl text-white font-bold absolute bottom-4 right-4 py-2 px-4 border-2  rounded-md mt-5 w-fit">
+                  Sell {item.count} items
+                </div>
               </div>
+
               <div className="p-3">
                 <div className="ml-5 pl-2 border-[#ffad5075] border-l-4">
                   <h1 className="text-2xl font-bold text-[#2b2a2a] mt-2">
                     {item.name}
                   </h1>
-                  <h1 className="text-xl font-semibold mt-2.5">Price: ${item.price-item.discount}</h1>
-                  <h1 className="mt-1 italic text-lg">Category : {item.category}</h1>
+                  <h1 className="text-xl font-semibold mt-2.5">
+                    Price: ${item.price - item.discount}
+                  </h1>
+                  <h1 className="mt-1 italic text-lg">
+                    Category : {item.category}
+                  </h1>
                 </div>
                 <Link to="/detail/3254546adf">
                   <button className=" mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-semibold text-xl text-[#f8f8f8]">
