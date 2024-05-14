@@ -112,7 +112,7 @@ const Navbar = () => {
               My Items
             </div>
           </Link>
-          <Link to="/my-ordered-items">
+          <Link to={`/my-ordered-items/${user?.email}`}>
             <div className="p-3 hover:bg-[#b3b3b344] border-b border-[#bebebe] cursor-pointer">
               My Order
             </div>

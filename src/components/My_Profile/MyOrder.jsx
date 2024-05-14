@@ -2,12 +2,28 @@ import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { IoIosArrowDown } from "react-icons/io";
 import { RxCrossCircled } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../auth/AuthContext";
+import useAxiosSecure from "../CutomHook/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import { GrDocumentUpdate } from "react-icons/gr";
 
 const MyOrder = () => {
   // const {} = useContext(AuthContext)
   const card = [];
+  const axiosSecure = useAxiosSecure()
+  const param = useParams();
+  const { data, isPending } = useQuery({
+    queryKey: ["user-order"],
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/user-order/${param?.email}`);
+      return result.data;
+    },
+  });
+  if (isPending) {
+    return <div className="text-2xl font-bold text-red-500">Loading...</div>;
+  }
+  console.log(data)
   return (
     <div>
       <Helmet>
@@ -66,37 +82,22 @@ const MyOrder = () => {
             <thead>
               <tr>
                 <th>SN.</th>
-                <th>Country</th>
-                <th>Spot</th>
-                <th>Location</th>
-                <th>Average Cost</th>
-                <th>Update</th>
+                <th>Food name</th>
+                <th>Price</th>
+                <th>itemCount</th>
+                <th>Date</th>
                 <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {card.map((item, idx) => {
+            {data.map((item, idx) => {
                 return (
                   <tr key={idx}>
                     <td className="text-center ">{idx + 1}</td>
-                    <td className="text-center">{item.country}</td>
-                    <td>{item.spot}</td>
-                    <td>{item.location}</td>
-                    <td className="text-center">{item.cost}</td>
-                    <td>
-                      <Link to={`/update/${item._id}`}>
-                        <div className="p-2 cursor-pointer bg-green-700 rounded-md w-fit text-white text-xl mx-auto">
-                          <GrDocumentUpdate />
-                        </div>
-                      </Link>
-                      {/* <div
-                          onClick={() => handleUpdateBtn(item._id)}
-                          className="p-2 cursor-pointer bg-green-700 rounded-md w-fit text-white text-xl mx-auto"
-                        >
-                          <GrDocumentUpdate />
-                        </div> */}
-                    </td>
-
+                    <td className="text-left">{item.name}</td>
+                    <td className="text-center">{item.price}</td>
+                    <td className="text-center">{item.itemCount}</td>
+                    <td className="text-center">{item.date}</td>
                     <td>
                       <div
                         // onClick={() => handleDeleteBtn(item._id)}

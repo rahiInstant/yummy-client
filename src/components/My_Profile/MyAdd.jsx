@@ -13,11 +13,10 @@ const MyAdd = () => {
   const { user } = useContext(AuthContext);
   const param = useParams();
   const axiosSecure = useAxiosSecure()
-  console.log('params', param)
   const { data, isPending } = useQuery({
-    queryKey: ["particular"],
+    queryKey: ["my-add"],
     queryFn: async () => {
-      const result = await axiosSecure.get(`/my-item/${user?.email}`);
+      const result = await axiosSecure.get(`/my-item/${param?.email}`);
       return result.data;
     },
   });

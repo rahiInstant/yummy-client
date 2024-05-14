@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/my-ordered-items",
+        path: "/my-ordered-items/:email",
         element: (
           <Private>
             <MyOrder />
