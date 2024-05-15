@@ -40,7 +40,7 @@ const MyOrder = () => {
         }
       })
       .then(() => {
-        refetch()
+        refetch();
         Swal.fire({
           title: "Deleted!",
           text: "Spot deleted successfully!!",
@@ -48,7 +48,7 @@ const MyOrder = () => {
         });
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         Swal.fire({
           title: "Error!",
           text: "spot can't deleted",
