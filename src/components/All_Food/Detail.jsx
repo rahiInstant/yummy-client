@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { TbCategory } from "react-icons/tb";
 import { BsPeopleFill } from "react-icons/bs";
 import { FaGlobeAmericas } from "react-icons/fa";
@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../auth/AuthContext";
 const Detail = () => {
   const { user } = useContext(AuthContext);
+  const location = useLocation()
   const [img, setImg] = useState("/slide_08.jpg");
   const [itemCount, setItemCount] = useState(1);
   // const { order, setOrder } = useContext(FoodContext);
@@ -85,7 +86,9 @@ const Detail = () => {
               {data?.name}
             </h1>
             <p className="mt-3 text-[#222224e8]">{data?.comment}</p>
-            <div className="mb-5 mt-2 uppercase font-semibold px-2 py-0.5 bg-[#a0fc8e9f] w-fit">{data?.quantity-data?.count} items in stock</div>
+            <div className="mb-5 mt-2 uppercase font-semibold px-2 py-0.5 bg-[#a0fc8e9f] w-fit">
+              {data?.quantity - data?.count} items in stock
+            </div>
             <div className="mt-4  flex gap-2 items-center">
               <span className="text-xl font-semibold">$</span>
               <span className="line-through text-red-500 text-lg sm:text-xl">
@@ -124,28 +127,37 @@ const Detail = () => {
                   +
                 </div>
               </div>
-              {data?.quantity - data?.count > 0 &&
-              data?.email !== user?.email ? (
-                <Link to={`/purchase/${data._id}`}>
-                  <button
-                    onClick={() =>
-                      setData({
-                        name: data?.name,
-                        price: data?.price,
-                        itemCount,
-                        ownerMail: data?.email,
-                      })
-                    }
-                    className="px-5 py-3 rounded-full bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-medium text-[#f8f8f8]"
-                  >
-                    Purchase Yummy
-                  </button>
-                </Link>
+              <Link state={location.pathname}  to={`${user ? `/purchase/${data._id}` : "/login"}`}>
+                <div
+                  onClick={() =>
+                    setData({
+                      name: data?.name,
+                      price: data?.price,
+                      itemCount,
+                      ownerMail: data?.email,
+                    })
+                  }
+                  className={`px-5 py-3 rounded-full ${
+                    user
+                      ? data?.quantity - data?.count > 0 &&
+                        data?.email !== user?.email
+                        ? "bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403]"
+                        : "bg-slate-400"
+                      : "bg-slate-400"
+                  }  font-medium text-[#f8f8f8]`}
+                >
+                  Purchase Yummy
+                </div>
+              </Link>
+
+              {/* 
+              {(
+
               ) : (
                 <div className="px-5 py-3 rounded-full bg-slate-400 font-medium text-[#f8f8f8]">
                   Purchase Yummy
                 </div>
-              )}
+              )} */}
             </div>
             <p className="italic text-red-500 font-medium">
               {data?.price - data?.discount <= 0 ? "Product Out of Stock" : ""}

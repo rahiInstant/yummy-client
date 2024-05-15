@@ -40,15 +40,16 @@ const MyAdd = () => {
       confirmButtonText: "Yes, I want to Delete.",
       denyButtonText: "Cancel",
     })
-      .then((result) => {
-        console.log(result);
-        if (result.isConfirmed) {
-          return axiosSecure.delete(`/user-order-delete/${id}`);
-        } else if (result.isDismissed) {
+      .then((response) => {
+        // console.log(response);
+        if (response.isConfirmed) {
+          return axiosSecure.delete(`/remove-my-food/${id}`);
+        } else if (response.isDismissed) {
           return new Promise((res, rej) => "");
         }
       })
-      .then(() => {
+      .then((result) => {
+        console.log(result.data)
         refetch();
         Swal.fire({
           title: "Deleted!",

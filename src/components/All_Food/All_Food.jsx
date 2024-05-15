@@ -65,8 +65,15 @@ const All_Food = () => {
       .post("/handle-search", { search: e.target.search.value })
       .then((res) => {
         setFood(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       });
+  }
+  function handleSort(e) {
+    // console.log(e.target.value)
+    axiosSecure.post("/all-food-sort", { key: e.target.value }).then((res) => {
+      setFood(res.data)
+      console.log(res.data);
+    });
   }
 
   return (
@@ -106,6 +113,7 @@ const All_Food = () => {
               </button>
               <div className="relative border rounded-lg  w-full">
                 <select
+                  onChange={handleSort}
                   name=""
                   id="select"
                   className="py-3.5 px-5 text-lg appearance-none font-semibold rounded-lg outline-none w-full"
@@ -113,17 +121,29 @@ const All_Food = () => {
                   <option value="" className="hidden">
                     Sort by--
                   </option>
-                  <option className="bg-white text-lg font-semibold" value="1">
+                  <option
+                    className="bg-white text-lg font-medium"
+                    value="priceHL"
+                  >
                     Price:High to Low
                   </option>
-                  <option className="bg-white text-lg font-semibold" value="2">
+                  <option
+                    className="bg-white text-lg font-medium"
+                    value="priceLH"
+                  >
                     Price:Low to High
                   </option>
-                  <option className="bg-white text-lg font-semibold" value="3">
-                    Number of Purchase
+                  <option
+                    className="bg-white text-lg font-medium"
+                    value="purchaseHL"
+                  >
+                    Purchase: High to Low
                   </option>
-                  <option className="bg-white text-lg font-semibold" value="3">
-                    Rating
+                  <option
+                    className="bg-white text-lg font-medium"
+                    value="purchaseLH"
+                  >
+                    Purchase:Low to High
                   </option>
                 </select>
                 <div className="absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none">
