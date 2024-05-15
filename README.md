@@ -1,6 +1,6 @@
-# React + Vite
+# Yummy Net
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+It is an open platform of delicious food. Here anyone can buy and sell delicious and nutritious food.
 
 Currently, two official plugins are available:
 
