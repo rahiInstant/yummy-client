@@ -2,23 +2,24 @@ import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { AuthContext } from "../../auth/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../CutomHook/useAxiosSecure";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
 
 const Gallery = () => {
   const MySwal = withReactContent(Swal);
-  const [feed, setFeed] = useState([])
+  const [feed, setFeed] = useState([]);
   const [updateGallery, setUpdateGallery] = useState(false);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const successMsg = (msg) => toast.success(msg);
-  const errorMsg = (msg) => toast.error(msg);
+  // const errorMsg = (msg) => toast.error(msg);
+  const location = useLocation()
   useEffect(() => {
     axiosSecure.get("/gallery").then((res) => {
-      setFeed(res.data)
+      setFeed(res.data);
       console.log(res.data);
     });
   }, [axiosSecure, updateGallery]);
@@ -41,7 +42,7 @@ const Gallery = () => {
 
   const showSwal = () => {
     if (!user) {
-      errorMsg('Please login to add review')
+      navigate("/login", { state: location.pathname });
       return;
     }
     MySwal.fire({
@@ -89,7 +90,6 @@ const Gallery = () => {
     });
   };
 
-
   return (
     <div>
       <Helmet>
@@ -118,19 +118,26 @@ const Gallery = () => {
           <div className="mt-6 h-6 border-t-2 border-orange-500 rounded-[12px]"></div>
           <div className="flex justify-center ">
             <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-5 mx-4 lg:mx-8 w-fit">
-              {
-                feed?.map((item, idx) => {
-                  return(      <div key={idx} className="h-[300px] relative overflow-hidden ">
-                  <img className="h-full rounded-[12px]" src={item.photoURL} alt="" />
-                  <div className="absolute bg-[#ffffffb9] opacity-0  hover:opacity-100 h-full duration-300 p-4 text-center top-0 flex flex-col items-center justify-center">
-                    <h1 className="text-2xl mb-2 font-semibold">{item.name}</h1>
-                    <p className="italic font-medium">
-                      {item.comment}
-                    </p>
+              {feed?.map((item, idx) => {
+                return (
+                  <div
+                    key={idx}
+                    className="h-[300px] relative overflow-hidden "
+                  >
+                    <img
+                      className="h-full rounded-[12px]"
+                      src={item.photoURL}
+                      alt=""
+                    />
+                    <div className="absolute bg-[#ffffffb9] opacity-0  hover:opacity-100 h-full w-full duration-300 p-4 text-center top-0 flex flex-col items-center justify-center">
+                      <h1 className="text-2xl mb-2 font-semibold">
+                        {item.name}
+                      </h1>
+                      <p className="italic font-medium">{item.comment}</p>
+                    </div>
                   </div>
-                </div>)
-                })
-              }
+                );
+              })}
             </div>
           </div>
         </div>

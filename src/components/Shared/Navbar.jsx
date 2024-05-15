@@ -50,7 +50,7 @@ const Navbar = () => {
         {/* <span className="text-[#e9812c]">R</span>ecipe#ff820e <span className="text-[#e9812c]">N</span>et #302f2f*/}
         <div
           style={{ textShadow: "2px 2px 15px #302f2f" }}
-          className="text-[40px] font-bold text-[#ff9f30] font-super space-x-1 px-3 py-1 "
+          className="text-[30px] md:text-[40px] font-bold text-[#ff9f30] font-super space-x-1 px-3 py-1 "
         >
           Yummy Net
         </div>

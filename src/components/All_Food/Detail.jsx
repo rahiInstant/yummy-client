@@ -10,7 +10,7 @@ import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../auth/AuthContext";
 const Detail = () => {
   const { user } = useContext(AuthContext);
-  const location = useLocation()
+  const location = useLocation();
   const [img, setImg] = useState("/slide_08.jpg");
   const [itemCount, setItemCount] = useState(1);
   // const { order, setOrder } = useContext(FoodContext);
@@ -81,7 +81,7 @@ const Detail = () => {
               />
             </div>
           </div>
-          <div className="lg:w-1/2 mx-5 lg:mx-0 lg:mr-8 xl:mr-0">
+          <div className="lg:w-1/2 mx-5 lg:mx-0 lg:mr-8 xl:mr-0 mt-0">
             <h1 className="text-[30px] sm:text-[40px] font-bold text-[#2b2a2a]">
               {data?.name}
             </h1>
@@ -127,7 +127,16 @@ const Detail = () => {
                   +
                 </div>
               </div>
-              <Link state={location.pathname}  to={`${user ? `/purchase/${data._id}` : "/login"}`}>
+              <Link
+                state={location.pathname}
+                to={`${
+                  user
+                    ? data?.email !== user?.email
+                      ? `/purchase/${data?._id}`
+                      : ""
+                    : "/login"
+                }`}
+              >
                 <div
                   onClick={() =>
                     setData({
@@ -139,8 +148,7 @@ const Detail = () => {
                   }
                   className={`px-5 py-3 rounded-full ${
                     user
-                      ? data?.quantity - data?.count > 0 &&
-                        data?.email !== user?.email
+                      ? data?.quantity > 0 && data?.email !== user?.email
                         ? "bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403]"
                         : "bg-slate-400"
                       : "bg-slate-400"
@@ -149,18 +157,9 @@ const Detail = () => {
                   Purchase Yummy
                 </div>
               </Link>
-
-              {/* 
-              {(
-
-              ) : (
-                <div className="px-5 py-3 rounded-full bg-slate-400 font-medium text-[#f8f8f8]">
-                  Purchase Yummy
-                </div>
-              )} */}
             </div>
             <p className="italic text-red-500 font-medium">
-              {data?.price - data?.discount <= 0 ? "Product Out of Stock" : ""}
+              {data?.quantity <= 0 ? "Product Out of Stock" : ""}
               {data?.email === user?.email
                 ? "You add this product so you cannot buy it."
                 : ""}

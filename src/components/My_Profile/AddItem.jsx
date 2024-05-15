@@ -194,12 +194,12 @@ const AddItem = () => {
                 </label>
 
                 <input
-                  required
                   id="discount"
                   name="discount"
                   className="py-4 px-5 mt-2 w-full text-lg rounded-lg outline-none border "
                   type="number"
-                  placeholder="Discount in dollar."
+                  // placeholder="Discount in dollar."
+                  defaultValue={0}
                 />
               </div>
             </div>

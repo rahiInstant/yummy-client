@@ -71,7 +71,7 @@ const All_Food = () => {
   function handleSort(e) {
     // console.log(e.target.value)
     axiosSecure.post("/all-food-sort", { key: e.target.value }).then((res) => {
-      setFood(res.data)
+      setFood(res.data);
       console.log(res.data);
     });
   }
@@ -171,6 +171,7 @@ const All_Food = () => {
         </div>
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-6 mx-4 ">
           {food?.map((item, idx) => {
+            // console.log(item.discount)
             return (
               <div key={idx} className=" h-auto shadow-md  rounded-lg ">
                 <div className="relative">
@@ -179,12 +180,21 @@ const All_Food = () => {
                     src={item.photo}
                     alt=""
                   />
-                  <div className=" backdrop-blur-xl text-white font-bold absolute bottom-4 right-4 py-2 px-4 border-2  rounded-md mt-5 w-fit">
-                    Stock : {item.quantity - item.count}
+                  <div
+                    className={`${
+                      item?.discount == 0 || typeof item?.discount !== "number"
+                        ? "hidden"
+                        : ""
+                    } backdrop-blur-xl text-white font-bold absolute top-4 left-4 py-2 px-4 border-2  rounded-md  w-fit`}
+                  >
+                    {Math.floor((item?.discount / item?.price) * 100)}% OFF
                   </div>
+                  {/* <div className="  bg-[#e44c1e] font-bold absolute top-4 left-4 py-2 px-4 border-2  rounded-full mt-5 w-fit">
+                  {Math.floor((item?.discount / item?.price) * 100)}% OFF
+                  </div> */}
                 </div>
-                <div className="p-3">
-                  <div className="ml-5 pl-2 border-[#ffad5075] border-l-4">
+                <div className="p-3  flex flex-col ">
+                  <div className="ml-5 pl-2 border-[#ffad5075] border-l-4 ">
                     <h1 className="text-2xl font-bold text-[#2b2a2a] mt-2">
                       {item.name}
                     </h1>
@@ -194,9 +204,15 @@ const All_Food = () => {
                     <h1 className="mt-1 italic text-lg">
                       Category : {item.category}
                     </h1>
+                    <h1 className="mt-1 italic text-lg">
+                      Purchase : {item.count}
+                    </h1>
+                    <h1 className="mt-1 italic text-lg">
+                      Stock : {item.quantity}
+                    </h1>
                   </div>
-                  <Link to={`/detail/${item._id}`}>
-                    <button className=" mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-semibold text-xl text-[#f8f8f8]">
+                  <Link  to={`/detail/${item._id}`}>
+                    <button className="mt-6 w-full py-3 rounded-lg bg-gradient-to-r from-[#E8751A] via-[#e76d09] to-[#FDA403] font-semibold text-xl text-[#f8f8f8]">
                       Yummy Details
                     </button>
                   </Link>
