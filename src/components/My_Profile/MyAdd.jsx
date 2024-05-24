@@ -9,6 +9,8 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../CutomHook/useAxiosSecure";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import HashLoader from "react-spinners/HashLoader";
+import toast from "react-hot-toast";
 
 const MyAdd = () => {
   const [open, setOpen] = useState(false);
@@ -16,6 +18,7 @@ const MyAdd = () => {
   const param = useParams();
   const axiosSecure = useAxiosSecure();
   const MySwal = withReactContent(Swal);
+  const successMsg = (msg) => toast.success(msg);
 
   const { data, isPending, refetch } = useQuery({
     queryKey: ["my-add"],
@@ -27,7 +30,7 @@ const MyAdd = () => {
   if (isPending) {
     return (
       <div className="text-2xl font-bold text-red-500 h-screen flex justify-center items-center">
-        Loading...
+        <HashLoader color="#d3641b" size={50} loading={true} />
       </div>
     );
   }
@@ -49,7 +52,7 @@ const MyAdd = () => {
         }
       })
       .then((result) => {
-        console.log(result.data)
+        console.log(result.data);
         refetch();
         Swal.fire({
           title: "Deleted!",
@@ -89,7 +92,8 @@ const MyAdd = () => {
       discount: parseInt(discount),
     };
     axiosSecure.patch(`/update-item/${id}`, itemInfo).then((res) => {
-      refetch()
+      refetch();
+      successMsg("Update Successfully.");
       console.log(res.data);
     });
     console.log(itemInfo);
@@ -297,10 +301,10 @@ const MyAdd = () => {
         <title>Yummy | My Added Item</title>
       </Helmet>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
-        <h1 className="text-[50px] font-bold uppercase text-[#c2c2c2] mt-12 text-center">
+        <h1 className="text-[30px] md:text-[40px] lg:text-[50px]  font-bold uppercase text-[#c2c2c2] mt-12 text-center">
           My Yummy List
         </h1>
-        <h1 className="text-2xl uppercase text-center text-[#d6d6d6]">
+        <h1 className="text-xl md:text-2xl uppercase text-center text-[#d6d6d6]">
           | user items |
         </h1>
       </div>
@@ -364,6 +368,7 @@ const MyAdd = () => {
           </div>
         </div>
         <div className="mt-10 overflow-x-auto  gap-5 mx-5 md:mx-10  text-[#131212] ">
+        {/* mt-10 overflow-x-auto  gap-5 mx-5 md:mx-10 dark:text-slate-300 */}
           <table className=" w-full table-auto">
             <thead>
               <tr>
@@ -383,7 +388,17 @@ const MyAdd = () => {
                     <td className="text-center ">{idx + 1}</td>
                     <td className="text-left">{item.name}</td>
                     <td className="text-center">{item.price}</td>
-                    <td className="text-center">{item.quantity}</td>
+                    <td
+                      className={`text-center ${
+                        item.quantity < 20
+                          ? item.quantity < 10
+                            ? "bg-red-300"
+                            : "bg-yellow-300"
+                          : ""
+                      }`}
+                    >
+                      {item.quantity}
+                    </td>
                     <td className="text-center">{item.count}</td>
                     <td>
                       {/* <Link to={`/update/${item._id}`}>

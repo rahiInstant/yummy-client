@@ -40,6 +40,7 @@ const AddItem = () => {
       console.log(res.data);
       if (res.data.insertedId) {
         successMsg("Your food added to the collection.");
+        form.reset();
       }
     });
     // console.log(itemInfo);
@@ -50,10 +51,10 @@ const AddItem = () => {
         <title>Yummy | Add Food </title>
       </Helmet>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
-        <h1 className="text-[50px] font-bold uppercase text-[#c2c2c2] mt-12 text-center">
+        <h1 className="text-[30px] md:text-[40px] lg:text-[50px]  font-bold uppercase text-[#c2c2c2] mt-12 text-center">
           Add new Yummy
         </h1>
-        <h1 className="text-2xl uppercase text-center text-[#d6d6d6]">
+        <h1 className="text-xl md:text-2xl uppercase text-center text-[#d6d6d6]">
           | add items |
         </h1>
       </div>
@@ -124,11 +125,11 @@ const AddItem = () => {
                   <option className="hidden" value="">
                     -- Category --
                   </option>
-                  <option value="Bangladesh">Biriyani</option>
-                  <option value="Thailand">Kacci</option>
-                  <option value="Vietnam">Kebab</option>
-                  <option value="Indonesia">Fry</option>
-                  <option value="Indonesia">Gem</option>
+                  <option value="Biriyani">Biriyani</option>
+                  <option value="Kacci">Kacci</option>
+                  <option value="Kebab">Kebab</option>
+                  <option value="Fry">Fry</option>
+                  <option value="Gem">Gem</option>
                 </select>
                 <div className="absolute top-1/2 right-3 -translate-y-1/2 pointer-events-none">
                   <IoIosArrowDown className="text-2xl" />

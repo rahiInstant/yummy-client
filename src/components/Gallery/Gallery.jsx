@@ -6,20 +6,24 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../CutomHook/useAxiosSecure";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet-async";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const Gallery = () => {
   const MySwal = withReactContent(Swal);
   const [feed, setFeed] = useState([]);
+  const [fetching, setFetching] = useState(true);
   const [updateGallery, setUpdateGallery] = useState(false);
   const { user } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const successMsg = (msg) => toast.success(msg);
   // const errorMsg = (msg) => toast.error(msg);
-  const location = useLocation()
+  const location = useLocation();
   useEffect(() => {
     axiosSecure.get("/gallery").then((res) => {
       setFeed(res.data);
+      setFetching(false)
       console.log(res.data);
     });
   }, [axiosSecure, updateGallery]);
@@ -96,10 +100,10 @@ const Gallery = () => {
         <title>Yummy | Gallery</title>
       </Helmet>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
-        <h1 className="text-[50px] font-bold uppercase text-[#c2c2c2] mt-12 text-center">
+        <h1 className="text-[30px] md:text-[40px] lg:text-[50px]  font-bold uppercase text-[#c2c2c2] mt-12 text-center">
           Experience with Yummy
         </h1>
-        <h1 className="text-2xl uppercase text-center text-[#d6d6d6]">
+        <h1 className="text-xl md:text-2xl uppercase text-center text-[#d6d6d6]">
           | Feedback Gallery |
         </h1>
       </div>
@@ -116,30 +120,36 @@ const Gallery = () => {
             </button>
           </div>
           <div className="mt-6 h-6 border-t-2 border-orange-500 rounded-[12px]"></div>
-          <div className="flex justify-center ">
-            <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-5 mx-4 lg:mx-8 w-fit">
-              {feed?.map((item, idx) => {
-                return (
-                  <div
-                    key={idx}
-                    className="h-[300px] relative overflow-hidden "
-                  >
-                    <img
-                      className="h-full rounded-[12px]"
-                      src={item.photoURL}
-                      alt=""
-                    />
-                    <div className="absolute bg-[#ffffffb9] opacity-0  hover:opacity-100 h-full w-full duration-300 p-4 text-center top-0 flex flex-col items-center justify-center">
-                      <h1 className="text-2xl mb-2 font-semibold">
-                        {item.name}
-                      </h1>
-                      <p className="italic font-medium">{item.comment}</p>
-                    </div>
-                  </div>
-                );
-              })}
+          {fetching ? (
+            <div className="flex items-center justify-center mt-2">
+              <BeatLoader color="#d3641b" size={18} loading={true} />
             </div>
-          </div>
+          ) : (
+            <div className="flex justify-center ">
+              <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-5 mx-4 lg:mx-8 w-fit">
+                {feed?.map((item, idx) => {
+                  return (
+                    <div
+                      key={idx}
+                      className="h-[300px] relative overflow-hidden "
+                    >
+                      <img
+                        className="h-full rounded-[12px]"
+                        src={item.photoURL}
+                        alt=""
+                      />
+                      <div className="absolute bg-[#ffffffb9] opacity-0  hover:opacity-100 h-full w-full duration-300 p-4 text-center top-0 flex flex-col items-center justify-center">
+                        <h1 className="text-2xl mb-2 font-semibold">
+                          {item.name}
+                        </h1>
+                        <p className="italic font-medium">{item.comment}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

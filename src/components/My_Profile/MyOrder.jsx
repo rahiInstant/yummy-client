@@ -6,9 +6,9 @@ import { Link, useParams } from "react-router-dom";
 import { AuthContext } from "../../auth/AuthContext";
 import useAxiosSecure from "../CutomHook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { GrDocumentUpdate } from "react-icons/gr";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import HashLoader from "react-spinners/HashLoader";
 
 const MyOrder = () => {
   // const {} = useContext(AuthContext)
@@ -22,6 +22,13 @@ const MyOrder = () => {
       return result.data;
     },
   });
+  if (isPending) {
+    return (
+      <div className="text-2xl font-bold text-red-500 h-screen flex justify-center items-center">
+        <HashLoader color="#d3641b" size={50} loading={true} />
+      </div>
+    );
+  }
 
   function handleDeleteBtn(id) {
     Swal.fire({
@@ -63,10 +70,10 @@ const MyOrder = () => {
         <title>Yummy | My Ordered Item</title>
       </Helmet>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
-        <h1 className="text-[50px] font-bold uppercase text-[#c2c2c2] mt-12 text-center">
+        <h1 className="text-[30px] md:text-[40px] lg:text-[50px]  font-bold uppercase text-[#c2c2c2] mt-12 text-center">
           Yummy Already enjoyed
         </h1>
-        <h1 className="text-2xl uppercase text-center text-[#d6d6d6]">
+        <h1 className="text-xl md:text-2xl uppercase text-center text-[#d6d6d6]">
           | user order |
         </h1>
       </div>
@@ -124,31 +131,25 @@ const MyOrder = () => {
               </tr>
             </thead>
             <tbody>
-              {isPending ? (
-                <div className="text-2xl font-bold text-red-500   flex justify-center items-center">
-                  Loading...
-                </div>
-              ) : (
-                data.map((item, idx) => {
-                  return (
-                    <tr key={idx}>
-                      <td className="text-center ">{idx + 1}</td>
-                      <td className="text-left">{item.name}</td>
-                      <td className="text-center">{item.price}</td>
-                      <td className="text-center">{item.itemCount}</td>
-                      <td className="text-center">{item.date}</td>
-                      <td>
-                        <div
-                          onClick={() => handleDeleteBtn(item._id)}
-                          className="p-2 cursor-pointer bg-red-700 rounded-md w-fit text-white text-xl mx-auto"
-                        >
-                          <RxCrossCircled />
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
+              {data?.map((item, idx) => {
+                return (
+                  <tr key={idx}>
+                    <td className="text-center ">{idx + 1}</td>
+                    <td className="text-left">{item.name}</td>
+                    <td className="text-center">{item.price}</td>
+                    <td className="text-center">{item.itemCount}</td>
+                    <td className="text-center">{item.date}</td>
+                    <td>
+                      <div
+                        onClick={() => handleDeleteBtn(item._id)}
+                        className="p-2 cursor-pointer bg-red-700 rounded-md w-fit text-white text-xl mx-auto"
+                      >
+                        <RxCrossCircled />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
               {/* {data.map((item, idx) => {
                 return (
                   <tr key={idx}>

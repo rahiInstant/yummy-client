@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
     return () => {
       unSubscribe();
     };
-  }, []);
+  }, [axiosSecure,user]);
   console.log(user);
 
   function googleSignIn() {

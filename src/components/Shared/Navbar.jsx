@@ -20,7 +20,7 @@ const Navbar = () => {
   const navClassName = `
   lg:h-full  items-center cursor-pointer justify-between 
   lg:justify-center px-7 lg:border-t-0  border-t  border-[#d18937] 
-  flex w-full lg:w-auto hover:bg-[#d18937] lg:hover:bg-[#ffffff31] 
+  flex w-full lg:w-auto hover:bg-[#d18937] lg:hover:bg-[#adadad3b]
   duration-200 lg:items-center  py-5 lg:py-0
   `;
   const successMsg = (msg) => toast.success(msg);
@@ -37,7 +37,7 @@ const Navbar = () => {
   }
   console.log(drop);
   return (
-    <nav className="  h-[85px] backdrop-blur-xl bg-[#63626257] fixed top-0 left-0  w-full z-20 flex justify-between items-center px-4 lg:px-10 ">
+    <nav className="  h-[85px] backdrop-blur-xl bg-[#0000006b] fixed top-0 left-0  w-full z-20 flex justify-between items-center px-4 lg:px-10 ">
       <div className="flex items-center gap-3 ">
         {/* <input className="hidden" type="checkbox" id="sidebar-active left-1/2  -translate-x-1/2" /> */}
         <label
@@ -56,6 +56,7 @@ const Navbar = () => {
         </div>
       </div>
       <div
+        // onBlur={() => isOpen(!open)}
         className={`${
           open ? "left-[0%]" : "-left-[100%]"
         }  duration-700 items-center lg:flex lg:h-full shadow-[5px_0_5px_#00000040] text-[#181717] text-lg font-medium lg:shadow-none w-[250px] lg:bg-transparent bg-[#b66d1a]  h-screen  z-50 fixed lg:static top-0  lg:w-auto flex-col  lg:flex-row  `}
@@ -72,7 +73,7 @@ const Navbar = () => {
         </div>
         {navLinks.map((item, id) => {
           return (
-            <NavLink className="h-full" to={item.path} key={id}>
+            <NavLink className="h-full text-white" to={item.path} key={id}>
               <div className={navClassName}>
                 <div className="">{item.navText}</div>
                 <div className="text-xl lg:hidden">

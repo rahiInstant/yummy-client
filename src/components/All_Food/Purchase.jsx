@@ -27,9 +27,9 @@ const Purchase = () => {
         axiosSecure
           .patch(`/update-food/${param.id}`, { itemCount: order.itemCount })
           .then((res) => console.log(res.data));
-        // setTimeout(() => {
-        //   navigate("/all-food");
-        // }, 1000);
+        setTimeout(() => {
+          navigate("/all-food");
+        }, 500);
       }
       console.log(res.data);
     });
@@ -46,10 +46,10 @@ const Purchase = () => {
         <title>Yummy | Food Purchase</title>
       </Helmet>
       <div className="h-[400px] w-full bg-[url('/sub_01.svg')] flex-col flex items-center justify-center ">
-        <h1 className="text-[50px] font-bold uppercase text-[#c2c2c2] mt-12 text-center">
+        <h1 className="text-[30px] md:text-[40px] lg:text-[50px]  font-bold uppercase text-[#c2c2c2] mt-12 text-center">
           Let's Enjoy Yummy
         </h1>
-        <h1 className="text-2xl uppercase text-center text-[#d6d6d6]">
+        <h1 className="text-xl md:text-2xl uppercase text-center text-[#d6d6d6]">
           | Checkout section |
         </h1>
       </div>
@@ -109,6 +109,7 @@ const Purchase = () => {
                     <th>Food Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
+                    <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -117,6 +118,9 @@ const Purchase = () => {
                       <td>{order.name}</td>
                       <td className="text-center">${order.price}</td>
                       <td className="text-center">{order.itemCount}</td>
+                      <td className="text-center">
+                        ${order.itemCount * order.price}
+                      </td>
                     </tr>
                   ) : (
                     ""
