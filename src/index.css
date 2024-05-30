@@ -9,8 +9,9 @@
   src: url("/Super Creamy Personal Use.ttf");
 }
 
-
-th,td {
+th,
+td {
   border: 1px solid #bbbbbb;
   padding: 10px;
+  white-space: nowrap;
 }

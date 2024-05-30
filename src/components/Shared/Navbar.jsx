@@ -118,6 +118,11 @@ const Navbar = () => {
               My Order
             </div>
           </Link>
+          <Link to="/customer-order">
+            <div className="p-3 hover:bg-[#b3b3b344] border-b border-[#bebebe]  cursor-pointer">
+              Customer Order
+            </div>
+          </Link>
           <Link to="/add-item">
             <div className="p-3 hover:bg-[#b3b3b344]  cursor-pointer">
               Add Item

@@ -20,6 +20,7 @@ import MyOrder from "./components/My_Profile/MyOrder.jsx";
 import AddItem from "./components/My_Profile/AddItem.jsx";
 import ErrorPage from "./components/Shared/ErrorPage.jsx";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import CustomerOrder from "./components/My_Profile/CustomerOrder.jsx";
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -84,6 +85,14 @@ const router = createBrowserRouter([
         element: (
           <Private>
             <AddItem />
+          </Private>
+        ),
+      },
+      {
+        path: "/customer-order",
+        element: (
+          <Private>
+            <CustomerOrder />
           </Private>
         ),
       },
